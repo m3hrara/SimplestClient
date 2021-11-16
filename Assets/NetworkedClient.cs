@@ -12,7 +12,7 @@ public class NetworkedClient : MonoBehaviour
     int reliableChannelID;
     int unreliableChannelID;
     int hostID;
-    int socketPort = 5491;
+    int socketPort = 5478;
     byte error;
     bool isConnected = false;
     int ourClientID;
@@ -26,9 +26,6 @@ public class NetworkedClient : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S))
-            SendMessageToHost("Hello from client");
-
         UpdateNetworkConnection();
     }
 
@@ -62,7 +59,7 @@ public class NetworkedClient : MonoBehaviour
             }
         }
     }
-    
+
     private void Connect()
     {
 
@@ -90,12 +87,12 @@ public class NetworkedClient : MonoBehaviour
             }
         }
     }
-    
+
     public void Disconnect()
     {
         NetworkTransport.Disconnect(hostID, connectionID, out error);
     }
-    
+
     public void SendMessageToHost(string msg)
     {
         byte[] buffer = Encoding.Unicode.GetBytes(msg);
@@ -105,12 +102,34 @@ public class NetworkedClient : MonoBehaviour
     private void ProcessRecievedMsg(string msg, int id)
     {
         Debug.Log("msg recieved = " + msg + ".  connection id = " + id);
+        string[] csv = msg.Split(',');
+        int Signifier = int.Parse(csv[0]);
+        if(Signifier == ServerToClientSignifier.AccountCreationComplete)
+        {
+            Debug.Log("Account creation complete");
+        }
+        else if (Signifier == ServerToClientSignifier.LoginComplete)
+        {
+            Debug.Log("Login complete");
+        }
     }
 
     public bool IsConnected()
     {
         return isConnected;
     }
-
-
+}
+public static class ClientToServerSignifier
+{
+    public const int CreateAccount = 1;
+    public const int Login = 2;
+    public const int JoinQueueForGame = 3;
+}
+public static class ServerToClientSignifier
+{
+    public const int LoginComplete = 1;
+    public const int LoginFailed = 2;
+    public const int AccountCreationComplete = 3;
+    public const int AccountCreationFailed = 4;
+    public const int GameStart = 5;
 }
