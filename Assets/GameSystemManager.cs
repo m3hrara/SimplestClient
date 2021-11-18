@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameSystemManager : MonoBehaviour
 {
-    GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,Game;
+    GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen;
     GameObject NetworkedClient;
     Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
     // Start is called before the first frame update
@@ -62,24 +62,24 @@ public class GameSystemManager : MonoBehaviour
             {
                 QuickChatThreeButton = go;
             }
-            else if (go.name == "Game")
+            else if (go.name == "GameScreen")
             {
-                Game = go;
+                GameScreen = go;
             }
 
         }
         Text[] allTexts = UnityEngine.Object.FindObjectsOfType<Text>();
         foreach (Text go in allTexts)
         {
-            if (go.name == "ChatTextOne")
+            if (go.name == "ChatBoxOne")
             {
                 ChatBoxOne = go;
             }
-            else if (go.name == "ChatTextTwo")
+            else if (go.name == "ChatBoxTwo")
             {
                 ChatBoxTwo = go;
             }
-            else if (go.name == "ChatTextThree")
+            else if (go.name == "ChatBoxThree")
             {
                 ChatBoxThree = go;
             }
@@ -138,7 +138,7 @@ public class GameSystemManager : MonoBehaviour
         LoginToggle.SetActive(false);
         CreateToggle.SetActive(false);
       //  TicTacToeSquareULButton.SetActive(false);
-        Game.SetActive(false);
+        GameScreen.SetActive(false);
 
         if (newState == gameStates.LoginMenu)
         {
@@ -160,7 +160,7 @@ public class GameSystemManager : MonoBehaviour
         }
         else if (newState == gameStates.TicTacToeGame)
         {
-            Game.SetActive(true);
+            GameScreen.SetActive(true);
         }
     }
 
