@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class GameSystemManager : MonoBehaviour
 {
-    GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle;
+    GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,Game;
     GameObject NetworkedClient;
-
+    Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +46,54 @@ public class GameSystemManager : MonoBehaviour
             {
                 NetworkedClient = go;
             }
+            else if (go.name == "JoinGameRoomButton")
+            {
+                JoinGameRoomButton = go;
+            }
+            else if (go.name == "QuickChatOneButton")
+            {
+                QuickChatOneButton = go;
+            }
+            else if (go.name == "QuickChatTwoButton")
+            {
+                QuickChatTwoButton = go;
+            }
+            else if (go.name == "QuickChatThreeButton")
+            {
+                QuickChatThreeButton = go;
+            }
+            else if (go.name == "Game")
+            {
+                Game = go;
+            }
+
+        }
+        Text[] allTexts = UnityEngine.Object.FindObjectsOfType<Text>();
+        foreach (Text go in allTexts)
+        {
+            if (go.name == "ChatTextOne")
+            {
+                ChatBoxOne = go;
+            }
+            else if (go.name == "ChatTextTwo")
+            {
+                ChatBoxTwo = go;
+            }
+            else if (go.name == "ChatTextThree")
+            {
+                ChatBoxThree = go;
+            }
         }
         SubmitButton.GetComponent<Button>().onClick.AddListener(SubmitButtonPressed);
         LoginToggle.GetComponent<Toggle>().onValueChanged.AddListener(LoginToggleChanged);
         CreateToggle.GetComponent<Toggle>().onValueChanged.AddListener(CreateToggleChanged);
+        JoinGameRoomButton.GetComponent<Button>().onClick.AddListener(JoinGameRoomButtonPressed);
+        QuickChatOneButton.GetComponent<Button>().onClick.AddListener(QuickChatOneButtonPressed);
+        QuickChatTwoButton.GetComponent<Button>().onClick.AddListener(QuickChatTwoButtonPressed);
+        QuickChatThreeButton.GetComponent<Button>().onClick.AddListener(QuickChatThreeButtonPressed);
 
+
+        ChangeState(gameStates.LoginMenu);
     }
 
     // Update is called once per frame
@@ -82,4 +125,111 @@ public class GameSystemManager : MonoBehaviour
     {
         LoginToggle.GetComponent<Toggle>().SetIsOnWithoutNotify(!changed);
     }
+
+    public void ChangeState(int newState)
+    {
+        JoinGameRoomButton.SetActive(false);
+
+        UsernameInputField.SetActive(false);
+        PasswordInputField.SetActive(false);
+        UsernameText.SetActive(false);
+        PasswordText.SetActive(false);
+        SubmitButton.SetActive(false);
+        LoginToggle.SetActive(false);
+        CreateToggle.SetActive(false);
+      //  TicTacToeSquareULButton.SetActive(false);
+        Game.SetActive(false);
+
+        if (newState == gameStates.LoginMenu)
+        {
+            UsernameInputField.SetActive(true);
+            PasswordInputField.SetActive(true);
+            UsernameText.SetActive(true);
+            PasswordText.SetActive(true);
+            SubmitButton.SetActive(true);
+            LoginToggle.SetActive(true);
+            CreateToggle.SetActive(true);
+        }
+        else if (newState == gameStates.MainMenu)
+        {
+            JoinGameRoomButton.SetActive(true);
+        }
+        else if (newState == gameStates.WaitingInQueueForOtherPlayer)
+        {
+
+        }
+        else if (newState == gameStates.TicTacToeGame)
+        {
+            Game.SetActive(true);
+        }
+    }
+
+    public void JoinGameRoomButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.JoinQueueForGame + "");
+        ChangeState(gameStates.WaitingInQueueForOtherPlayer);
+    }
+
+    public void QuickChatOneButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.QuickChatOne + "");
+    }
+    public void QuickChatTwoButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.QuickChatTwo + "");
+    }
+
+    public void QuickChatThreeButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.QuickChatThree + "");
+    }
+
+    public void QuickChatOneRecieved()
+    {
+        ChatBoxOne.text = ChatBoxTwo.text;
+        ChatBoxTwo.text = ChatBoxThree.text;
+        ChatBoxThree.text = ("Opponent: Good Luck!");
+    }
+    public void QuickChatTwoRecieved()
+    {
+        ChatBoxOne.text = ChatBoxTwo.text;
+        ChatBoxTwo.text = ChatBoxThree.text;
+        ChatBoxThree.text = ("Opponent: Get Ready!");
+    }
+    public void QuickChatThreeRecieved()
+    {
+        ChatBoxOne.text = ChatBoxTwo.text;
+        ChatBoxTwo.text = ChatBoxThree.text;
+        ChatBoxThree.text = ("Opponent: GG!");
+    }
+
+    public void QuickChatOneSent()
+    {
+        ChatBoxOne.text = ChatBoxTwo.text;
+        ChatBoxTwo.text = ChatBoxThree.text;
+        ChatBoxThree.text = ("You: Good Luck!");
+    }
+    public void QuickChatTwoSent()
+    {
+        ChatBoxOne.text = ChatBoxTwo.text;
+        ChatBoxTwo.text = ChatBoxThree.text;
+        ChatBoxThree.text = ("You: Get Ready!");
+    }
+    public void QuickChatThreeSent()
+    {
+        ChatBoxOne.text = ChatBoxTwo.text;
+        ChatBoxTwo.text = ChatBoxThree.text;
+        ChatBoxThree.text = ("You: GG!");
+    }
+}
+
+static public class gameStates
+{
+    public const int LoginMenu = 1;
+
+    public const int MainMenu = 2;
+
+    public const int WaitingInQueueForOtherPlayer = 3;
+
+    public const int TicTacToeGame = 4;
 }
