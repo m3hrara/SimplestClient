@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class NetworkedClient : MonoBehaviour
 {
-
+    public string Username;
     int connectionID;
     int maxConnections = 1000;
     int reliableChannelID;
@@ -86,7 +86,7 @@ public class NetworkedClient : MonoBehaviour
             hostID = NetworkTransport.AddHost(topology, 0);
             Debug.Log("Socket open.  Host ID = " + hostID);
 
-            connectionID = NetworkTransport.Connect(hostID, "192.168.2.15", socketPort, 0, out error); // server is local on network
+            connectionID = NetworkTransport.Connect(hostID, "192.168.2.12", socketPort, 0, out error); // server is local on network
 
             if (error == 0)
             {
@@ -117,11 +117,13 @@ public class NetworkedClient : MonoBehaviour
         if(Signifier == ServerToClientSignifier.AccountCreationComplete)
         {
             Debug.Log("Account creation complete");
+            //Username = csv[1];
             gameSystemManager.GetComponent<GameSystemManager>().ChangeState(gameStates.MainMenu);
         }
         else if (Signifier == ServerToClientSignifier.LoginComplete)
         {
             Debug.Log("Login complete");
+            //Username = csv[1];
             gameSystemManager.GetComponent<GameSystemManager>().ChangeState(gameStates.MainMenu);
         }
         else if (Signifier == ServerToClientSignifier.GameStart)
@@ -156,6 +158,10 @@ public class NetworkedClient : MonoBehaviour
         {
             gameSystemManager.GetComponent<GameSystemManager>().QuickChatThreeSent();
         }
+        else if (Signifier == ServerToClientSignifier.TextMessage)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().PrintMessageToView(csv[1]);
+        }
     }
 
     public bool IsConnected()
@@ -172,6 +178,8 @@ public static class ClientToServerSignifier
     public const int QuickChatOne = 5;
     public const int QuickChatTwo = 6;
     public const int QuickChatThree = 7;
+    public const int SendMessage = 8;
+
 }
 public static class ServerToClientSignifier
 {
@@ -187,4 +195,6 @@ public static class ServerToClientSignifier
     public const int QuickChatOneSent = 10;
     public const int QuickChatTwoSent = 11;
     public const int QuickChatThreeSent = 12;
+    public const int TextMessage = 13;
+
 }

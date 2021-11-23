@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class GameSystemManager : MonoBehaviour
 {
-    GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen;
+    GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, 
+        QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen,
+        MessageInputField, SendMessageButton;
     GameObject NetworkedClient;
+    float ExtraHeight;
     Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
+    List<Message> MessageList = new List<Message>();
+    public GameObject TextPrefab, ChatBox;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +71,14 @@ public class GameSystemManager : MonoBehaviour
             {
                 GameScreen = go;
             }
-
+            else if (go.name == "MessageInputField")
+            {
+                MessageInputField = go;
+            }
+            else if (go.name == "SendMessageButton")
+            {
+                SendMessageButton = go;
+            }
         }
         Text[] allTexts = UnityEngine.Object.FindObjectsOfType<Text>();
         foreach (Text go in allTexts)
@@ -91,7 +103,7 @@ public class GameSystemManager : MonoBehaviour
         QuickChatOneButton.GetComponent<Button>().onClick.AddListener(QuickChatOneButtonPressed);
         QuickChatTwoButton.GetComponent<Button>().onClick.AddListener(QuickChatTwoButtonPressed);
         QuickChatThreeButton.GetComponent<Button>().onClick.AddListener(QuickChatThreeButtonPressed);
-
+        SendMessageButton.GetComponent<Button>().onClick.AddListener(SendMessageButtonPressed);
 
         ChangeState(gameStates.LoginMenu);
     }
@@ -101,9 +113,32 @@ public class GameSystemManager : MonoBehaviour
     {
         
     }
+    public void SendMessageButtonPressed()
+    {
+        string txt = MessageInputField.GetComponent<InputField>().text;
+        string msg;
+        msg = ClientToServerSignifier.SendMessage + "," + NetworkedClient.GetComponent<NetworkedClient>().Username + "," + txt;
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(msg);
+    }
+    public void PrintMessageToView(string txt)
+    {
+        ExtraHeight -= 20;
+        int max = 8;
+        MessageInputField.GetComponent<InputField>().text = "";
+        if(MessageList.Count >=max)
+        {
+            Destroy(MessageList[0].textObject.gameObject);
+            MessageList.Remove(MessageList[0]);
+        }
+        Message msg = new Message(txt);
+        GameObject text = Instantiate(TextPrefab, ChatBox.transform);
+        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(TextPrefab.GetComponent<RectTransform>().anchoredPosition.x, TextPrefab.GetComponent<RectTransform>().anchoredPosition.y + ExtraHeight);
+        msg.textObject = text.GetComponent<Text>();
+        msg.textObject.text = " " + msg.text;
+        MessageList.Add(msg);
+    }
     public void SubmitButtonPressed()
     {
-        Debug.Log("AS");
         string p = PasswordInputField.GetComponent<InputField>().text;
         string un = UsernameInputField.GetComponent<InputField>().text;
         string msg;
@@ -232,4 +267,14 @@ static public class gameStates
     public const int WaitingInQueueForOtherPlayer = 3;
 
     public const int TicTacToeGame = 4;
+}
+[System.Serializable]
+public class Message
+{
+    public Text textObject;
+    public string text;
+    public Message(string newTxt)
+    {
+        this.text = newTxt;
+    }
 }
