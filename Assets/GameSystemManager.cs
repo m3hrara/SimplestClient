@@ -10,7 +10,7 @@ public class GameSystemManager : MonoBehaviour
         MessageInputField, SendMessageButton;
     GameObject NetworkedClient;
     Button Button,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9;
-    float ExtraHeight;
+    float ExtraHeight = -180;
     Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
     List<Message> MessageList = new List<Message>();
     public GameObject TextPrefab, ChatBox;
@@ -176,17 +176,25 @@ public class GameSystemManager : MonoBehaviour
     }
     public void PrintMessageToView(string txt)
     {
-        ExtraHeight -= 20;
-        int max = 8;
+        ExtraHeight += 20;
+        int maxHeight = 0;
         MessageInputField.GetComponent<InputField>().text = "";
-        if(MessageList.Count >=max)
+        Message msg = new Message(txt);
+        GameObject text = Instantiate(TextPrefab, ChatBox.transform);
+        if(MessageList.Count>0)
+        {
+            for (int i = 0; i < MessageList.Count; i++)
+            {
+                MessageList[i].textObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(MessageList[i].textObject.GetComponent<RectTransform>().anchoredPosition.x, MessageList[i].textObject.GetComponent<RectTransform>().anchoredPosition.y + 20);
+            }
+        }
+        if(ExtraHeight >= maxHeight)
         {
             Destroy(MessageList[0].textObject.gameObject);
             MessageList.Remove(MessageList[0]);
         }
-        Message msg = new Message(txt);
-        GameObject text = Instantiate(TextPrefab, ChatBox.transform);
-        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(TextPrefab.GetComponent<RectTransform>().anchoredPosition.x, TextPrefab.GetComponent<RectTransform>().anchoredPosition.y + ExtraHeight);
+
+        text.GetComponent<RectTransform>().anchoredPosition = new Vector2(TextPrefab.GetComponent<RectTransform>().anchoredPosition.x, TextPrefab.GetComponent<RectTransform>().anchoredPosition.y-160);
         msg.textObject = text.GetComponent<Text>();
         msg.textObject.text = " " + msg.text;
         MessageList.Add(msg);
@@ -392,40 +400,28 @@ public class GameSystemManager : MonoBehaviour
 
     public void QuickChatOneRecieved()
     {
-        ChatBoxOne.text = ChatBoxTwo.text;
-        ChatBoxTwo.text = ChatBoxThree.text;
-        ChatBoxThree.text = ("Opponent: Good Luck!");
+        PrintMessageToView("Opponent: Good Luck!");
     }
     public void QuickChatTwoRecieved()
     {
-        ChatBoxOne.text = ChatBoxTwo.text;
-        ChatBoxTwo.text = ChatBoxThree.text;
-        ChatBoxThree.text = ("Opponent: Get Ready!");
+        PrintMessageToView("Opponent: Get Ready!");
     }
     public void QuickChatThreeRecieved()
     {
-        ChatBoxOne.text = ChatBoxTwo.text;
-        ChatBoxTwo.text = ChatBoxThree.text;
-        ChatBoxThree.text = ("Opponent: GG!");
+        PrintMessageToView("Opponent: GG!");
     }
 
     public void QuickChatOneSent()
     {
-        ChatBoxOne.text = ChatBoxTwo.text;
-        ChatBoxTwo.text = ChatBoxThree.text;
-        ChatBoxThree.text = ("You: Good Luck!");
+        PrintMessageToView("You: Good Luck!");
     }
     public void QuickChatTwoSent()
     {
-        ChatBoxOne.text = ChatBoxTwo.text;
-        ChatBoxTwo.text = ChatBoxThree.text;
-        ChatBoxThree.text = ("You: Get Ready!");
+        PrintMessageToView("You: Get Ready!");
     }
     public void QuickChatThreeSent()
     {
-        ChatBoxOne.text = ChatBoxTwo.text;
-        ChatBoxTwo.text = ChatBoxThree.text;
-        ChatBoxThree.text = ("You: GG!");
+        PrintMessageToView("You: GG!");
     }
 }
 
