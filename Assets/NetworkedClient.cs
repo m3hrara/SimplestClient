@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 public class NetworkedClient : MonoBehaviour
 {
-    public string Username;
     int connectionID;
     int maxConnections = 1000;
     int reliableChannelID;
@@ -16,10 +15,11 @@ public class NetworkedClient : MonoBehaviour
     byte error;
     bool isConnected = false;
     int ourClientID;
-
     GameObject gameSystemManager;
+    int playerTurnIndex;
+    int opponentTurnIndex;
+    public string Username;
 
-    // Start is called before the first frame update
     void Start()
     {
         GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
@@ -117,13 +117,11 @@ public class NetworkedClient : MonoBehaviour
         if(Signifier == ServerToClientSignifier.AccountCreationComplete)
         {
             Debug.Log("Account creation complete");
-            //Username = csv[1];
             gameSystemManager.GetComponent<GameSystemManager>().ChangeState(gameStates.MainMenu);
         }
         else if (Signifier == ServerToClientSignifier.LoginComplete)
         {
             Debug.Log("Login complete");
-            //Username = csv[1];
             gameSystemManager.GetComponent<GameSystemManager>().ChangeState(gameStates.MainMenu);
         }
         else if (Signifier == ServerToClientSignifier.GameStart)
@@ -162,6 +160,82 @@ public class NetworkedClient : MonoBehaviour
         {
             gameSystemManager.GetComponent<GameSystemManager>().PrintMessageToView(csv[1]);
         }
+        else if (Signifier == ServerToClientSignifier.SlotOneX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotOneButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotOneO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotOneButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotTwoX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotTwoButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotTwoO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotTwoButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotThreeX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotThreeButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotThreeO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotThreeButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotFourX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotFourButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotFourO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotFourButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotFiveX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotFiveButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotFiveO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotFiveButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotSixX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotSixButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotSixO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotSixButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotSevenX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotSevenButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotSevenO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotSevenButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotEightX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotEightButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotEightO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotEightButtonO();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotNineX)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotNineButtonX();
+        }
+        else if (Signifier == ServerToClientSignifier.SlotNineO)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().SlotNineButtonO();
+        }
+        //else if (Signifier == ServerToClientSignifier.SendButtonIndex)
+        //{
+        //    gameSystemManager.GetComponent<GameSystemManager>().PrintMessageToView(csv[1]);
+        //}
     }
 
     public bool IsConnected()
@@ -179,6 +253,16 @@ public static class ClientToServerSignifier
     public const int QuickChatTwo = 6;
     public const int QuickChatThree = 7;
     public const int SendMessage = 8;
+    public const int SendButtonIndex = 9;
+    public const int SendButtonOne = 10;
+    public const int SendButtonTwo = 11;
+    public const int SendButtonThree = 12;
+    public const int SendButtonFour = 13;
+    public const int SendButtonFive = 14;
+    public const int SendButtonSix = 15;
+    public const int SendButtonSeven = 16;
+    public const int SendButtonEight = 17;
+    public const int SendButtonNine = 18;
 
 }
 public static class ServerToClientSignifier
@@ -196,5 +280,23 @@ public static class ServerToClientSignifier
     public const int QuickChatTwoSent = 11;
     public const int QuickChatThreeSent = 12;
     public const int TextMessage = 13;
+    public const int SlotOneX = 14;
+    public const int SlotOneO = 15;
+    public const int SlotTwoX = 16;
+    public const int SlotTwoO = 17;
+    public const int SlotThreeX = 18;
+    public const int SlotThreeO = 19;
+    public const int SlotFourX = 20;
+    public const int SlotFourO = 21;
+    public const int SlotFiveX = 22;
+    public const int SlotFiveO = 23;
+    public const int SlotSixX = 24;
+    public const int SlotSixO = 25;
+    public const int SlotSevenX = 26;
+    public const int SlotSevenO = 27;
+    public const int SlotEightX = 28;
+    public const int SlotEightO = 29;
+    public const int SlotNineX = 30;
+    public const int SlotNineO = 31;
 
 }

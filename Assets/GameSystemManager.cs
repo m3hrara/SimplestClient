@@ -9,10 +9,12 @@ public class GameSystemManager : MonoBehaviour
         QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen,
         MessageInputField, SendMessageButton;
     GameObject NetworkedClient;
+    Button Button,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9;
     float ExtraHeight;
     Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
     List<Message> MessageList = new List<Message>();
     public GameObject TextPrefab, ChatBox;
+    public Sprite spriteX, spriteO;
     // Start is called before the first frame update
     void Start()
     {
@@ -79,6 +81,7 @@ public class GameSystemManager : MonoBehaviour
             {
                 SendMessageButton = go;
             }
+          
         }
         Text[] allTexts = UnityEngine.Object.FindObjectsOfType<Text>();
         foreach (Text go in allTexts)
@@ -96,7 +99,49 @@ public class GameSystemManager : MonoBehaviour
                 ChatBoxThree = go;
             }
         }
-        SubmitButton.GetComponent<Button>().onClick.AddListener(SubmitButtonPressed);
+
+        Button[] allButtons = UnityEngine.Object.FindObjectsOfType<Button>();
+        foreach (Button go in allButtons)
+        {
+            if (go.name == "Button")
+            {
+                Button = go;
+            }
+            else if (go.name == "Button2")
+            {
+                Button2 = go;
+            }
+            else if (go.name == "Button3")
+            {
+                Button3 = go;
+            }
+            else if (go.name == "Button4")
+            {
+                Button4 = go;
+            }
+            else if (go.name == "Button5")
+            {
+                Button5 = go;
+            }
+            else if (go.name == "Button6")
+            {
+                Button6 = go;
+            }
+            else if (go.name == "Button7")
+            {
+                Button7 = go;
+            }
+            else if (go.name == "Button8")
+            {
+                Button8 = go;
+            }
+            else if (go.name == "Button9")
+            {
+                Button9 = go;
+            }
+
+        }
+            SubmitButton.GetComponent<Button>().onClick.AddListener(SubmitButtonPressed);
         LoginToggle.GetComponent<Toggle>().onValueChanged.AddListener(LoginToggleChanged);
         CreateToggle.GetComponent<Toggle>().onValueChanged.AddListener(CreateToggleChanged);
         JoinGameRoomButton.GetComponent<Button>().onClick.AddListener(JoinGameRoomButtonPressed);
@@ -104,6 +149,15 @@ public class GameSystemManager : MonoBehaviour
         QuickChatTwoButton.GetComponent<Button>().onClick.AddListener(QuickChatTwoButtonPressed);
         QuickChatThreeButton.GetComponent<Button>().onClick.AddListener(QuickChatThreeButtonPressed);
         SendMessageButton.GetComponent<Button>().onClick.AddListener(SendMessageButtonPressed);
+        Button.GetComponent<Button>().onClick.AddListener(SlotOneButtonPressed);
+        Button2.GetComponent<Button>().onClick.AddListener(SlotTwoButtonPressed);
+        Button3.GetComponent<Button>().onClick.AddListener(SlotThreeButtonPressed);
+        Button4.GetComponent<Button>().onClick.AddListener(SlotFourButtonPressed);
+        Button5.GetComponent<Button>().onClick.AddListener(SlotFiveButtonPressed);
+        Button6.GetComponent<Button>().onClick.AddListener(SlotSixButtonPressed);
+        Button7.GetComponent<Button>().onClick.AddListener(SlotSevenButtonPressed);
+        Button8.GetComponent<Button>().onClick.AddListener(SlotEightButtonPressed);
+        Button9.GetComponent<Button>().onClick.AddListener(SlotNineButtonPressed);
 
         ChangeState(gameStates.LoginMenu);
     }
@@ -205,6 +259,123 @@ public class GameSystemManager : MonoBehaviour
         ChangeState(gameStates.WaitingInQueueForOtherPlayer);
     }
 
+    public void SlotOneButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonOne + "");
+    }
+    public void SlotTwoButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonTwo + "");
+    }
+    public void SlotThreeButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonThree + "");
+    }
+    public void SlotFourButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonFour + "");
+    }
+    public void SlotFiveButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonFive + "");
+    }
+    public void SlotSixButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonSix + "");
+    }
+    public void SlotSevenButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonSeven + "");
+    }
+    public void SlotEightButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonEight + "");
+    }
+    public void SlotNineButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonNine + "");
+    }
+
+    public void SlotOneButtonX()
+    {
+        Button.image.sprite = spriteX;
+    }
+    public void SlotOneButtonO()
+    {
+        Button.image.sprite = spriteO;
+    }
+
+    public void SlotTwoButtonX()
+    {
+        Button2.image.sprite = spriteX;
+    }
+    public void SlotTwoButtonO()
+    {
+        Button2.image.sprite = spriteO;
+    }
+
+    public void SlotThreeButtonX()
+    {
+        Button3.image.sprite = spriteX;
+    }
+    public void SlotThreeButtonO()
+    {
+        Button3.image.sprite = spriteO;
+    }
+
+    public void SlotFourButtonX()
+    {
+        Button4.image.sprite = spriteX;
+    }
+    public void SlotFourButtonO()
+    {
+        Button4.image.sprite = spriteO;
+    }
+
+    public void SlotFiveButtonX()
+    {
+        Button5.image.sprite = spriteX;
+    }
+    public void SlotFiveButtonO()
+    {
+        Button5.image.sprite = spriteO;
+    }
+
+    public void SlotSixButtonX()
+    {
+        Button6.image.sprite = spriteX;
+    }
+    public void SlotSixButtonO()
+    {
+        Button6.image.sprite = spriteO;
+    }
+
+    public void SlotSevenButtonX()
+    {
+        Button7.image.sprite = spriteX;
+    }
+    public void SlotSevenButtonO()
+    {
+        Button7.image.sprite = spriteO;
+    }
+
+    public void SlotEightButtonX()
+    {
+        Button8.image.sprite = spriteX;
+    }
+    public void SlotEightButtonO()
+    {
+        Button8.image.sprite = spriteO;
+    }
+
+    public void SlotNineButtonX()
+    {
+        Button9.image.sprite = spriteX;
+    }
+    public void SlotNineButtonO()
+    {
+        Button9.image.sprite = spriteO;
+    }
     public void QuickChatOneButtonPressed()
     {
         NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.QuickChatOne + "");
