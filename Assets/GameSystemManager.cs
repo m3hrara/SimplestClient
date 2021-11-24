@@ -306,83 +306,101 @@ public class GameSystemManager : MonoBehaviour
 
     public void SlotOneButtonX()
     {
+        if(Button.image.sprite==null)
         Button.image.sprite = spriteX;
     }
     public void SlotOneButtonO()
     {
-        Button.image.sprite = spriteO;
+        if (Button.image.sprite == null)
+            Button.image.sprite = spriteO;
     }
 
     public void SlotTwoButtonX()
     {
-        Button2.image.sprite = spriteX;
+        if (Button2.image.sprite == null)
+            Button2.image.sprite = spriteX;
     }
     public void SlotTwoButtonO()
     {
-        Button2.image.sprite = spriteO;
+        if (Button2.image.sprite == null)
+            Button2.image.sprite = spriteO;
     }
 
     public void SlotThreeButtonX()
     {
-        Button3.image.sprite = spriteX;
+        if (Button3.image.sprite == null)
+            Button3.image.sprite = spriteX;
     }
     public void SlotThreeButtonO()
     {
-        Button3.image.sprite = spriteO;
+        if (Button3.image.sprite == null)
+            Button3.image.sprite = spriteO;
     }
 
     public void SlotFourButtonX()
     {
-        Button4.image.sprite = spriteX;
+        if (Button4.image.sprite == null)
+            Button4.image.sprite = spriteX;
     }
     public void SlotFourButtonO()
     {
-        Button4.image.sprite = spriteO;
+        if (Button4.image.sprite == null)
+            Button4.image.sprite = spriteO;
     }
 
     public void SlotFiveButtonX()
     {
-        Button5.image.sprite = spriteX;
+        if (Button5.image.sprite == null)
+            Button5.image.sprite = spriteX;
     }
     public void SlotFiveButtonO()
     {
-        Button5.image.sprite = spriteO;
+        if (Button5.image.sprite == null)
+            Button5.image.sprite = spriteO;
     }
 
     public void SlotSixButtonX()
     {
-        Button6.image.sprite = spriteX;
+        if (Button6.image.sprite == null)
+            Button6.image.sprite = spriteX;
     }
     public void SlotSixButtonO()
     {
-        Button6.image.sprite = spriteO;
+        if (Button6.image.sprite == null)
+            Button6.image.sprite = spriteO;
     }
 
     public void SlotSevenButtonX()
     {
-        Button7.image.sprite = spriteX;
+        if (Button7.image.sprite == null)
+            Button7.image.sprite = spriteX;
     }
     public void SlotSevenButtonO()
     {
-        Button7.image.sprite = spriteO;
+        if (Button7.image.sprite == null)
+            Button7.image.sprite = spriteO;
     }
 
     public void SlotEightButtonX()
     {
-        Button8.image.sprite = spriteX;
+        if (Button8.image.sprite == null)
+            Button8.image.sprite = spriteX;
     }
     public void SlotEightButtonO()
     {
-        Button8.image.sprite = spriteO;
+        if (Button8.image.sprite == null)
+            Button8.image.sprite = spriteO;
     }
 
     public void SlotNineButtonX()
     {
-        Button9.image.sprite = spriteX;
+        if (Button9.image.sprite == null)
+            Button9.image.sprite = spriteX;
     }
     public void SlotNineButtonO()
     {
-        Button9.image.sprite = spriteO;
+        if (Button9.image.sprite == null)
+            Button9.image.sprite = spriteO;
     }
     public void QuickChatOneButtonPressed()
     {
