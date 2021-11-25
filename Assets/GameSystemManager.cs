@@ -259,6 +259,10 @@ public class GameSystemManager : MonoBehaviour
         {
             GameScreen.SetActive(true);
         }
+        else if (newState == gameStates.Observer)
+        {
+            GameScreen.SetActive(true);
+        }
     }
 
     public void JoinGameRoomButtonPressed()
@@ -452,6 +456,8 @@ static public class gameStates
     public const int WaitingInQueueForOtherPlayer = 3;
 
     public const int TicTacToeGame = 4;
+
+    public const int Observer = 5;
 }
 [System.Serializable]
 public class Message

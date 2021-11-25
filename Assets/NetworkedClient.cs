@@ -232,10 +232,10 @@ public class NetworkedClient : MonoBehaviour
         {
             gameSystemManager.GetComponent<GameSystemManager>().SlotNineButtonO();
         }
-        //else if (Signifier == ServerToClientSignifier.SendButtonIndex)
-        //{
-        //    gameSystemManager.GetComponent<GameSystemManager>().PrintMessageToView(csv[1]);
-        //}
+        else if (Signifier == ServerToClientSignifier.StartObserving)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().ChangeState(gameStates.Observer);
+        }
     }
 
     public bool IsConnected()
@@ -298,5 +298,5 @@ public static class ServerToClientSignifier
     public const int SlotEightO = 29;
     public const int SlotNineX = 30;
     public const int SlotNineO = 31;
-
+    public const int StartObserving = 32;
 }
