@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class GameSystemManager : MonoBehaviour
 {
+    int index = 0;
+    float counter = 0f;
+    float max = 60f;
+    bool isReplayed = false;
     GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, 
         QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen,
         MessageInputField, SendMessageButton;
     GameObject NetworkedClient;
-    Button Button,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9;
+    Button Button,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9, Replay;
+    public List<Button> buttons;
+    public List<int> temp;
     float ExtraHeight = -180;
     Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
     List<Message> MessageList = new List<Message>();
@@ -18,6 +24,8 @@ public class GameSystemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        buttons = new List<Button>();
+        temp = new List<int>();
         GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
         foreach (GameObject go in allObjects)
         {
@@ -139,6 +147,10 @@ public class GameSystemManager : MonoBehaviour
             {
                 Button9 = go;
             }
+            else if (go.name == "Replay")
+            {
+                Replay = go;
+            }
 
         }
             SubmitButton.GetComponent<Button>().onClick.AddListener(SubmitButtonPressed);
@@ -158,14 +170,41 @@ public class GameSystemManager : MonoBehaviour
         Button7.GetComponent<Button>().onClick.AddListener(SlotSevenButtonPressed);
         Button8.GetComponent<Button>().onClick.AddListener(SlotEightButtonPressed);
         Button9.GetComponent<Button>().onClick.AddListener(SlotNineButtonPressed);
+        Replay.GetComponent<Button>().onClick.AddListener(ReplayButtonPressed);
+
 
         ChangeState(gameStates.LoginMenu);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+
+        if (isReplayed)
+        {
+            counter++;
+            if (counter == max)
+            {
+                if (temp[index] == 0)
+                {
+                    buttons[index].image.sprite = spriteO;
+
+                }
+                else if (temp[index] == 1)
+                {
+                    buttons[index].image.sprite = spriteX;
+
+                }
+                index++;
+                counter = 0;
+                if(index>=9)
+                {
+                    isReplayed = false;
+                    index = 0;
+                }
+            }
+        }
+
     }
     public void SendMessageButtonPressed()
     {
@@ -307,104 +346,139 @@ public class GameSystemManager : MonoBehaviour
     {
         NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonNine + "");
     }
-
+    public void ReplayButtonPressed()
+    {
+        NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendReplayButton + "");
+    }
     public void SlotOneButtonX()
     {
         if(Button.image.sprite==null)
-        Button.image.sprite = spriteX;
+            Button.image.sprite = spriteX;
+        buttons.Add(Button);
     }
     public void SlotOneButtonO()
     {
         if (Button.image.sprite == null)
             Button.image.sprite = spriteO;
+        buttons.Add(Button);
     }
 
     public void SlotTwoButtonX()
     {
         if (Button2.image.sprite == null)
             Button2.image.sprite = spriteX;
+        buttons.Add(Button2);
     }
     public void SlotTwoButtonO()
     {
         if (Button2.image.sprite == null)
             Button2.image.sprite = spriteO;
+        buttons.Add(Button2);
     }
 
     public void SlotThreeButtonX()
     {
         if (Button3.image.sprite == null)
             Button3.image.sprite = spriteX;
+        buttons.Add(Button3);
+
     }
     public void SlotThreeButtonO()
     {
         if (Button3.image.sprite == null)
             Button3.image.sprite = spriteO;
+        buttons.Add(Button3);
+
     }
 
     public void SlotFourButtonX()
     {
         if (Button4.image.sprite == null)
             Button4.image.sprite = spriteX;
+        buttons.Add(Button4);
+
     }
     public void SlotFourButtonO()
     {
         if (Button4.image.sprite == null)
             Button4.image.sprite = spriteO;
+        buttons.Add(Button4);
+
     }
 
     public void SlotFiveButtonX()
     {
         if (Button5.image.sprite == null)
             Button5.image.sprite = spriteX;
+        buttons.Add(Button5);
+
     }
     public void SlotFiveButtonO()
     {
         if (Button5.image.sprite == null)
             Button5.image.sprite = spriteO;
+        buttons.Add(Button5);
+
     }
 
     public void SlotSixButtonX()
     {
         if (Button6.image.sprite == null)
             Button6.image.sprite = spriteX;
+        buttons.Add(Button6);
+
     }
     public void SlotSixButtonO()
     {
         if (Button6.image.sprite == null)
             Button6.image.sprite = spriteO;
+        buttons.Add(Button6);
+
     }
 
     public void SlotSevenButtonX()
     {
         if (Button7.image.sprite == null)
             Button7.image.sprite = spriteX;
+        buttons.Add(Button7);
+
     }
     public void SlotSevenButtonO()
     {
         if (Button7.image.sprite == null)
             Button7.image.sprite = spriteO;
+        buttons.Add(Button7);
+
     }
 
     public void SlotEightButtonX()
     {
         if (Button8.image.sprite == null)
             Button8.image.sprite = spriteX;
+        buttons.Add(Button8);
+
     }
     public void SlotEightButtonO()
     {
         if (Button8.image.sprite == null)
             Button8.image.sprite = spriteO;
+        buttons.Add(Button8);
+
     }
 
     public void SlotNineButtonX()
     {
         if (Button9.image.sprite == null)
             Button9.image.sprite = spriteX;
+        buttons.Add(Button9);
+
     }
     public void SlotNineButtonO()
     {
         if (Button9.image.sprite == null)
             Button9.image.sprite = spriteO;
+        buttons.Add(Button9);
+
     }
     public void QuickChatOneButtonPressed()
     {
@@ -445,7 +519,32 @@ public class GameSystemManager : MonoBehaviour
     {
         PrintMessageToView("You: GG!");
     }
-}
+    public void ReplayMoves()
+    {
+        for(int i=0;i<9;i++)
+        {
+            temp.Add(-1);
+        }
+        for(int i=0; i<9;i++)
+        {
+
+            if (buttons[i].image.sprite == spriteO)
+                {
+                    temp[i] = 0;
+                }
+                else if (buttons[i].image.sprite == spriteX)
+                {
+                    temp[i] = 1;
+                }
+            }
+            foreach (Button button in buttons)
+            {
+                button.image.sprite = null;
+            }
+        isReplayed = true;  
+
+    }
+    }
 
 static public class gameStates
 {
