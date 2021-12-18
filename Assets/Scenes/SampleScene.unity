@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 289329352}
   - component: {fileID: 289329351}
   m_Layer: 5
-  m_Name: Button4
+  m_Name: Button3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1045,7 +1045,7 @@ GameObject:
   - component: {fileID: 352276160}
   - component: {fileID: 352276159}
   m_Layer: 5
-  m_Name: Button9
+  m_Name: Button8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1437,7 +1437,7 @@ GameObject:
   - component: {fileID: 471906648}
   - component: {fileID: 471906647}
   m_Layer: 5
-  m_Name: Button7
+  m_Name: Button6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1867,7 +1867,7 @@ GameObject:
   - component: {fileID: 676388687}
   - component: {fileID: 676388686}
   m_Layer: 5
-  m_Name: Button2
+  m_Name: Button1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2412,7 +2412,7 @@ GameObject:
   - component: {fileID: 841981647}
   - component: {fileID: 841981646}
   m_Layer: 5
-  m_Name: Button6
+  m_Name: Button5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2855,7 +2855,7 @@ GameObject:
   - component: {fileID: 905907882}
   - component: {fileID: 905907881}
   m_Layer: 5
-  m_Name: Button8
+  m_Name: Button7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3207,7 +3207,7 @@ GameObject:
   - component: {fileID: 985133704}
   - component: {fileID: 985133703}
   m_Layer: 5
-  m_Name: Button5
+  m_Name: Button4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4297,7 +4297,7 @@ GameObject:
   - component: {fileID: 1334489344}
   - component: {fileID: 1334489343}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5695,7 +5695,7 @@ GameObject:
   - component: {fileID: 1782060909}
   - component: {fileID: 1782060908}
   m_Layer: 5
-  m_Name: Button3
+  m_Name: Button2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6009,6 +6009,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46a6e36cb9939d4e8df5187a942760e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: []
+  allButtons:
+  - {fileID: 1334489344}
+  - {fileID: 676388687}
+  - {fileID: 1782060909}
+  - {fileID: 289329352}
+  - {fileID: 985133704}
+  - {fileID: 841981647}
+  - {fileID: 471906648}
+  - {fileID: 905907882}
+  - {fileID: 352276160}
+  temp: 
   TextPrefab: {fileID: 2828931690005215508, guid: cdd0be28331a08e4386aa147951ad1e2, type: 3}
   ChatBox: {fileID: 538424271}
   spriteX: {fileID: 21300000, guid: 4ffb0c49ab1eff643b2aaea58f318d2f, type: 3}
