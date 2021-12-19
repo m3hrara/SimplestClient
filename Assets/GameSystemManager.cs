@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class GameSystemManager : MonoBehaviour
 {
-    int index = 0;
-    float counter = 0f;
-    float max = 60f;
+    int idx = 0;
+    float time = 0f;
+    float maxTimer = 60f;
     bool isReplayed = false;
     GameObject UsernameInputField, PasswordInputField, UsernameText, PasswordText, SubmitButton, LoginToggle, CreateToggle, JoinGameRoomButton, 
         QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen,
@@ -15,10 +15,10 @@ public class GameSystemManager : MonoBehaviour
     GameObject NetworkedClient;
     Button Button0,Button1, Button2, Button3,Button4,Button5,Button6,Button7,Button8;
     public Button Replay;
-    public List<Button> buttons;
+    public List<int> playerIDs;
     public Button[] allButtons;
-    public List<int> temp;
     float ExtraHeight = -180;
+
     Text ChatBoxOne, ChatBoxTwo, ChatBoxThree;
     List<Message> MessageList = new List<Message>();
     public GameObject TextPrefab, ChatBox;
@@ -26,8 +26,8 @@ public class GameSystemManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buttons = new List<Button>();
-        temp = new List<int>();
+        playerIDs = new List<int>();
+
         GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
         foreach (GameObject go in allObjects)
         {
@@ -150,7 +150,13 @@ public class GameSystemManager : MonoBehaviour
             }
 
         }
-            SubmitButton.GetComponent<Button>().onClick.AddListener(SubmitButtonPressed);
+        for (int i = 0; i <= 9; i++)
+        {
+            playerIDs.Add(0);
+        }
+
+
+        SubmitButton.GetComponent<Button>().onClick.AddListener(SubmitButtonPressed);
         LoginToggle.GetComponent<Toggle>().onValueChanged.AddListener(LoginToggleChanged);
         CreateToggle.GetComponent<Toggle>().onValueChanged.AddListener(CreateToggleChanged);
         JoinGameRoomButton.GetComponent<Button>().onClick.AddListener(JoinGameRoomButtonPressed);
@@ -176,28 +182,26 @@ public class GameSystemManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (isReplayed)
         {
-            counter++;
-            if (counter == max)
+            time++;
+            //time += Time.deltaTime;
+            if (time == maxTimer)
             {
-                if (temp[index] == 1)
+                if (playerIDs[idx] == 1)
                 {
-                    allButtons[index].image.sprite = spriteX;
-
+                    allButtons[idx].image.sprite = spriteX;
                 }
-                else if (temp[index] == 2)
+                else if (playerIDs[idx] == 2)
                 {
-                    allButtons[index].image.sprite = spriteO;
-
+                    allButtons[idx].image.sprite = spriteO;
                 }
-                index++;
-                counter = 0;
-                if (index >= 9)
+                idx++;
+                time = 0;
+                if (idx >= 9)
                 {
                     isReplayed = false;
-                    index = 0;
+                    idx = 0;
                 }
             }
         }
@@ -349,8 +353,7 @@ public class GameSystemManager : MonoBehaviour
         {
             allButtons[i].image.sprite = null;
         }
-        temp[slot] = playerID;
-
+        playerIDs[slot]=playerID;
         isReplayed = true;
     }
     public void SlotClick(int playerID, int index)
@@ -411,32 +414,8 @@ public class GameSystemManager : MonoBehaviour
     {
         PrintMessageToView("You: GG!");
     }
-    public void ReplayMoves()
-    {
-        for(int i=0;i<9;i++)
-        {
-            temp.Add(-1);
-        }
-        for(int i=0; i<9;i++)
-        {
 
-            if (buttons[i].image.sprite == spriteO)
-                {
-                    temp[i] = 0;
-                }
-                else if (buttons[i].image.sprite == spriteX)
-                {
-                    temp[i] = 1;
-                }
-            }
-            foreach (Button button in buttons)
-            {
-                button.image.sprite = null;
-            }
-        isReplayed = true;  
-
-    }
-    }
+}
 
 static public class gameStates
 {
