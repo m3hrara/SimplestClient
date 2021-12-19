@@ -164,6 +164,10 @@ public class NetworkedClient : MonoBehaviour
         {
             gameSystemManager.GetComponent<GameSystemManager>().SlotClick(int.Parse(csv[1]), int.Parse(csv[2]));
         }
+        else if (Signifier == ServerToClientSignifier.ReplayTwo)
+        {
+            gameSystemManager.GetComponent<GameSystemManager>().ReplayGame(int.Parse(csv[1]), int.Parse(csv[2]));
+        }
     }
 
     public bool IsConnected()

@@ -185,19 +185,19 @@ public class GameSystemManager : MonoBehaviour
             counter++;
             if (counter == max)
             {
-                if (temp[index] == 0)
+                if (temp[index] == 1)
                 {
-                    buttons[index].image.sprite = spriteO;
+                    allButtons[index].image.sprite = spriteX;
 
                 }
-                else if (temp[index] == 1)
+                else if (temp[index] == 2)
                 {
-                    buttons[index].image.sprite = spriteX;
+                    allButtons[index].image.sprite = spriteO;
 
                 }
                 index++;
                 counter = 0;
-                if(index>=9)
+                if (index >= 9)
                 {
                     isReplayed = false;
                     index = 0;
@@ -344,6 +344,17 @@ public class GameSystemManager : MonoBehaviour
     public void SlotEightButtonPressed()
     {
         NetworkedClient.GetComponent<NetworkedClient>().SendMessageToHost(ClientToServerSignifier.SendButtonClick + "," + 8);
+    }
+
+    public void ReplayGame(int playerID, int slot)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            allButtons[i].image.sprite = null;
+        }
+        temp[slot] = playerID;
+
+        isReplayed = true;
     }
     public void SlotClick(int playerID, int index)
     {
