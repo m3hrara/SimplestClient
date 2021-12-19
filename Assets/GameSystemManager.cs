@@ -13,7 +13,8 @@ public class GameSystemManager : MonoBehaviour
         QuickChatOneButton, QuickChatTwoButton, QuickChatThreeButton,GameScreen,
         MessageInputField, SendMessageButton;
     GameObject NetworkedClient;
-    Button Button0,Button1, Button2, Button3,Button4,Button5,Button6,Button7,Button8, Replay;
+    Button Button0,Button1, Button2, Button3,Button4,Button5,Button6,Button7,Button8;
+    public Button Replay;
     public List<Button> buttons;
     public Button[] allButtons;
     public List<int> temp;
@@ -146,10 +147,6 @@ public class GameSystemManager : MonoBehaviour
             else if (go.name == "Button8")
             {
                 Button8 = go;
-            }
-            else if (go.name == "Replay")
-            {
-                Replay = go;
             }
 
         }
